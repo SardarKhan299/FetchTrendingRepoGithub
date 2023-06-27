@@ -1,5 +1,6 @@
-package com.traiden.fetchtrendingrepo.data.repositories
+package com.traiden.fetchtrendingrepo.domain.usecases
 
+import com.traiden.fetchtrendingrepo.data.repositories.GithubRepository
 import com.traiden.fetchtrendingrepo.domain.Repository
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
