@@ -1,5 +1,7 @@
 package com.traiden.fetchtrendingrepo.domain.usecases
 
-interface GetTrendingRepositoriesUseCase {
+import com.traiden.fetchtrendingrepo.domain.Repository
 
+interface GetTrendingRepositoriesUseCase {
+    suspend fun execute(): List<Repository>
 }
