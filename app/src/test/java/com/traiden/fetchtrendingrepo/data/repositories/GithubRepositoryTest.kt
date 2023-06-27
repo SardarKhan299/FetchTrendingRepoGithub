@@ -35,7 +35,6 @@ class GithubRepositoryTest {
 
         // When
         val result = githubRepository.getTrendingRepositories()
-        assertEquals(result,repositories)
 
         // Then
         assertThat(result).isEqualTo(repositories)
