@@ -1,8 +1,10 @@
 package com.traiden.fetchtrendingrepo.base
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 
-class AppClass : Application() {
+@HiltAndroidApp
+class MyApp : Application() {
 
     companion object {
         var isLoading: Boolean = false

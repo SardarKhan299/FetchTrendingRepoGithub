@@ -9,8 +9,9 @@ import com.traiden.fetchtrendingrepo.domain.usecases.GetTrendingRepositoriesUseC
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TrendingRepositoriesViewModel (private val getTrendingRepositoriesUseCase: GetTrendingRepositoriesUseCase) : ViewModel() {
+class TrendingRepositoriesViewModel @Inject constructor(private val getTrendingRepositoriesUseCase: GetTrendingRepositoriesUseCase) : ViewModel() {
     private val _repositories = MutableLiveData<List<Repository>>()
     val repositories: LiveData<List<Repository>> = _repositories
 

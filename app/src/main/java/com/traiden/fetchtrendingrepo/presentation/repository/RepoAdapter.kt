@@ -1,7 +1,6 @@
 package com.traiden.fetchtrendingrepo.presentation.repository
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.traiden.fetchtrendingrepo.R
-import com.traiden.fetchtrendingrepo.base.AppClass.Companion.isLoading
+import com.traiden.fetchtrendingrepo.base.MyApp.Companion.isLoading
 import com.traiden.fetchtrendingrepo.domain.Repository
 
 
