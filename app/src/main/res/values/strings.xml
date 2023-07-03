@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FetchTrendingRepo</string>
+    <string name="user_profile">User Porfile Image</string>
 </resources>
