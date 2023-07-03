@@ -1,8 +1,9 @@
-package com.traiden.fetchtrendingrepo
+package com.traiden.fetchtrendingrepo.presentation.repository
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.traiden.fetchtrendingrepo.R
 import com.traiden.fetchtrendingrepo.presentation.viewmodel.TrendingRepositoriesViewModel
 
 class MainActivity : AppCompatActivity() {

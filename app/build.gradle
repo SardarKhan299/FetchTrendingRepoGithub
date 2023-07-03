@@ -109,10 +109,14 @@ dependencies {
     testImplementation 'com.squareup.okhttp3:mockwebserver:3.12.1'
     testImplementation 'org.hamcrest:hamcrest-library:2.2'
     testImplementation 'org.assertj:assertj-core:3.21.0'
-
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0'
 
+    // For Shimmer Loading Animation..//
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Glide for Image Loading...//
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 
 

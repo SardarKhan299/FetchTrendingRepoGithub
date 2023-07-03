@@ -29,14 +29,13 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:contentDescription="@string/user_profile"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@id/guidelineL"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:srcCompat="@mipmap/ic_launcher"
                 app:shapeAppearanceOverlay="@style/roundedCornersImageView"
                 />
@@ -48,7 +47,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
-            android:lineSpacingMultiplier="1"
             android:text=""
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +60,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
-            android:lineSpacingMultiplier="1"
             android:text=""
             android:layout_marginTop="@dimen/_4sdp"
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
@@ -123,7 +120,7 @@
             />
 
         <TextView
-            android:id="@+id/tv_wacthers"
+            android:id="@+id/tv_watchers"
             style="@style/DescStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -134,6 +131,18 @@
             app:layout_constraintStart_toEndOf="@+id/iv_star"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc"
             tools:text="112" />
+
+        <View
+            android:id="@+id/bottom_view"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/_8sdp"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guidelineL"
+            app:layout_constraintEnd_toEndOf="@+id/guidelineR"
+            app:layout_constraintTop_toBottomOf="@+id/tv_language" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
