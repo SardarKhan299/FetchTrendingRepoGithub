@@ -25,9 +25,6 @@ class MyApp : Application() {
             AppCompatDelegate.MODE_NIGHT_YES -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
-            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
         }
     }
 }

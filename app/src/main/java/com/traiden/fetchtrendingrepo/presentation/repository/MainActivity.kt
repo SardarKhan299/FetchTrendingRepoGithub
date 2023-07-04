@@ -1,20 +1,21 @@
 package com.traiden.fetchtrendingrepo.presentation.repository
 
 
-import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.traiden.fetchtrendingrepo.R
 import com.traiden.fetchtrendingrepo.base.BaseActivity
 import com.traiden.fetchtrendingrepo.databinding.ActivityMainBinding
 import com.traiden.fetchtrendingrepo.domain.Items
 import com.traiden.fetchtrendingrepo.domain.NetworkResult
 import com.traiden.fetchtrendingrepo.presentation.viewmodel.TrendingRepositoriesViewModel
+import com.traiden.fetchtrendingrepo.util.SharedPreferences
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -90,5 +91,35 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         Log.d(MainActivity::class.simpleName, "stopShimmerAnimation: ")
         binding.shimmerLayout.stopShimmer()
         binding.shimmerLayout.visibility = View.GONE
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.getItemId()) {
+            R.id.change_theme -> { // Do whatever you want to do on logout click.
+                toggleDarkTheme()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun toggleDarkTheme() {
+        Log.d(MainActivity::class.simpleName, "toggleDarkTheme: ")
+        when (SharedPreferences.getAppTheme(this)) {
+            AppCompatDelegate.MODE_NIGHT_NO -> {
+                SharedPreferences.saveAppTheme(this,AppCompatDelegate.MODE_NIGHT_YES)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            AppCompatDelegate.MODE_NIGHT_YES -> {
+                SharedPreferences.saveAppTheme(this,AppCompatDelegate.MODE_NIGHT_NO)
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
     }
 }

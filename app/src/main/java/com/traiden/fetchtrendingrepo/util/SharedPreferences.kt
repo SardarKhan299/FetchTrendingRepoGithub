@@ -27,9 +27,9 @@ class SharedPreferences {
         fun getAppTheme(context: Context): Int {
             val msharedPreferences: SharedPreferences? = initShardPreference(context)
             if (msharedPreferences != null) {
-                return msharedPreferences.getInt(APP_THEME, -1)
+                return msharedPreferences.getInt(APP_THEME, 1)
             }
-            return -1
+            return 1
         }
     }
 }
