@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.traiden.fetchtrendingrepo.R
 import com.traiden.fetchtrendingrepo.base.BaseActivity
-import com.traiden.fetchtrendingrepo.base.MyApp.Companion.isLoading
+import com.traiden.fetchtrendingrepo.domain.Items
+import com.traiden.fetchtrendingrepo.domain.NetworkResult
 import com.traiden.fetchtrendingrepo.presentation.viewmodel.TrendingRepositoriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,26 +36,42 @@ class MainActivity : BaseActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.repositories.observe(this) { repositories ->
-            // Update the UI with the fetched repositories
-            adapter = RepoAdapter(this,repositories.items)
-            recylerview.adapter = adapter
-        }
+        viewModel.repositories.observe(this) { networkResult ->
+            when(networkResult){
+                is NetworkResult.Loading ->{
+                    startShimmerAnimation()
+                }
+                is NetworkResult.Error ->{
+                    stopShimmerAnimation()
+                }
+                is NetworkResult.Success ->{
+                    // Stop shimmer animation
+                    stopShimmerAnimation()
+                    setDataOnRecyclerView(networkResult)
+                }
 
-        viewModel.loadAnimation.observe(this) { isLoading ->
-            // Update the UI with the fetched repositories
-            if (isLoading) {
-                // Start shimmer animation
-                shimmerFrameLayout.startShimmer()
-                recylerview.visibility = View.GONE
-            } else {
-                // Stop shimmer animation
-                shimmerFrameLayout.stopShimmer()
-                shimmerFrameLayout.visibility = View.GONE
-
-                // Show the fetched data in the RecyclerView
-                recylerview.visibility = View.VISIBLE
             }
+
         }
+    }
+
+    private fun setDataOnRecyclerView(networkResult: NetworkResult<Items>) {
+        // Show the fetched data in the RecyclerView
+        recylerview.visibility = View.VISIBLE
+        // Update the UI with the fetched repositories
+        val respositories = networkResult.data as Items
+        adapter = RepoAdapter(this, respositories.items)
+        recylerview.adapter = adapter
+    }
+
+    private fun startShimmerAnimation() {
+        // Start shimmer animation
+        shimmerFrameLayout.startShimmer()
+        recylerview.visibility = View.GONE
+    }
+
+    private fun stopShimmerAnimation() {
+        shimmerFrameLayout.stopShimmer()
+        shimmerFrameLayout.visibility = View.GONE
     }
 }

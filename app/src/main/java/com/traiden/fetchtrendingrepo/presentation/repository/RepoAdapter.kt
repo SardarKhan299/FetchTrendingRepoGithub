@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.traiden.fetchtrendingrepo.R
-import com.traiden.fetchtrendingrepo.base.MyApp.Companion.isLoading
 import com.traiden.fetchtrendingrepo.domain.Repository
 
 
