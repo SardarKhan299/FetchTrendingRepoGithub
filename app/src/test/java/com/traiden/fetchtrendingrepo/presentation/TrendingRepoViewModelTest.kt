@@ -51,17 +51,15 @@ class TrendingRepoViewModelTest {
 
         runBlocking {
             // Given
-            val repositories = listOf(
-                Repository("Repo 1", "Owner 1", "Description 1", "", "java", 4),
-                Repository("Repo 2", "Owner 2", "Description 2", "", "kotlin", 3)
-            )
+            val repositories =
+                Repository("Repo 1", "Owner 1", "Description 1", "", "java", 4)
             Mockito.`when`(getTrendingRepositoriesUseCase.execute()).thenReturn(repositories)
 
             // When
             trendingRepositoriesViewModel.fetchTrendingRepositories()
 
             // Then
-            val liveDataObserver = mock(Observer::class.java) as Observer<List<Repository>>
+            val liveDataObserver = mock(Observer::class.java) as Observer<Repository>
             trendingRepositoriesViewModel.repositories.observeForever(liveDataObserver)
             verify(liveDataObserver).onChanged(repositories)
         }

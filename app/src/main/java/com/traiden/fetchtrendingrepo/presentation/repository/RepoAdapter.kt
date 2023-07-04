@@ -27,20 +27,15 @@ class RepoAdapter (context: Context, private val repositories: List<Repository>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val repository = repositories[position]
-        if (isLoading) {
-            holder.startShimmerAnimation()
-        } else {
-            holder.stopShimmerAnimation()
+        Log.d(RepoAdapter::class.simpleName, "onBindViewHolder: ")
+            val repository = repositories[position]
             // Bind data to the repository item layout
-            loadImageUsingGlide(repository.ownerAvatar,holder.ownerAvatar)
-            holder.ownerName.text = repository.owner
+            loadImageUsingGlide(repository.owner.avatar_url,holder.ownerAvatar)
+            holder.ownerName.text = repository.owner.login
             holder.repoName.text = repository.name
             holder.description.text = repository.description
             holder.language.text = repository.language
             holder.watchers.text = repository.watchers_count.toString()
-
-        }
     }
 
     private fun loadImageUsingGlide(ownerAvatar: String, imageView: ImageView) {
@@ -56,7 +51,6 @@ class RepoAdapter (context: Context, private val repositories: List<Repository>)
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val shimmerLayout: ShimmerFrameLayout = itemView.findViewById(R.id.shimmerLayout)
         val ownerAvatar = itemView.findViewById(R.id.iv_profile) as ImageView
         val ownerName = itemView.findViewById(R.id.tv_owner_name) as TextView
         val repoName = itemView.findViewById(R.id.tv_repo_name) as TextView
@@ -64,14 +58,6 @@ class RepoAdapter (context: Context, private val repositories: List<Repository>)
         val language = itemView.findViewById(R.id.tv_language) as TextView
         val watchers = itemView.findViewById(R.id.tv_watchers) as TextView
 
-
-        fun startShimmerAnimation() {
-            shimmerLayout.startShimmer()
-        }
-
-        fun stopShimmerAnimation() {
-            shimmerLayout.stopShimmer()
-        }
     }
 
     override fun getItemCount(): Int {

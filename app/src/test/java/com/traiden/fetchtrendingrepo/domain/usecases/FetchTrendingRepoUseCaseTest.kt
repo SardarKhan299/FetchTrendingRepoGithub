@@ -1,6 +1,6 @@
 package com.traiden.fetchtrendingrepo.domain.usecases
 
-import com.traiden.fetchtrendingrepo.data.repositories.GithubRepository
+import com.traiden.fetchtrendingrepo.domain.GithubRepository
 import com.traiden.fetchtrendingrepo.domain.Repository
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
@@ -27,10 +27,7 @@ class FetchTrendingRepoUseCaseTest {
     fun `execute should return list of repositories`() {
         runBlocking {
             // Given
-            val repositories = listOf(
-                Repository("Repo 1", "Owner 1", "Description 1", "", "java", 4),
-                Repository("Repo 2", "Owner 2", "Description 2", "", "kotlin", 3)
-            )
+            val repositories = Repository("Repo 1", "Owner 1", "Description 1", "", "java", 4)
             Mockito.`when`(githubRepository.getTrendingRepositories()).thenReturn(repositories)
 
             // When

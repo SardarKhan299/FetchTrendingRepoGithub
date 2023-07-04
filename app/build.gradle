@@ -27,12 +27,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'BASE_URL', '"https://api.github.com/search/repositories?q=language=+sort:stars"'
+            buildConfigField 'String', 'BASE_URL', '"https://api.github.com/search/"'
         }
         debug {
             debuggable true
             minifyEnabled false
-            buildConfigField 'String', 'BASE_URL', '"https://api.github.com/search/repositories?q=language=+sort:stars"'
+            buildConfigField 'String', 'BASE_URL', '"https://api.github.com/search/"'
         }
     }
     compileOptions {

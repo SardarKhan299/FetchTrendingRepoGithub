@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.facebook.shimmer.ShimmerFrameLayout android:id="@+id/shimmerLayout"
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:shimmer_auto_start="true"
-    app:shimmer_duration="1000"
-    app:shimmer_repeat_count="@integer/material_motion_duration_long_1"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -47,10 +41,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
-            android:text=""
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Termanus" />
+            android:text="Termanus" />
 
 
         <TextView
@@ -60,11 +53,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
-            android:text=""
             android:layout_marginTop="@dimen/_4sdp"
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_owner_name"
-            tools:text="reinaface" />
+            android:text="reinaface" />
 
         <TextView
             android:id="@+id/tv_desc"
@@ -73,12 +65,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_4sdp"
-            android:text=""
             android:layout_marginTop="@dimen/_4sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_repo_name"
-            tools:text="The Remake of this repo is to " />
+            android:text="The Remake of this repo is to " />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_language"
@@ -99,11 +90,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_4sdp"
-            android:text=""
             android:layout_marginTop="@dimen/_6sdp"
             app:layout_constraintStart_toEndOf="@+id/iv_language"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-            tools:text="Python" />
+            android:text="Python" />
 
 
 
@@ -126,11 +116,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginEnd="@dimen/_4sdp"
-            android:text=""
             android:layout_marginTop="@dimen/_6sdp"
             app:layout_constraintStart_toEndOf="@+id/iv_star"
             app:layout_constraintTop_toBottomOf="@+id/tv_desc"
-            tools:text="112" />
+            android:text="112" />
 
         <View
             android:id="@+id/bottom_view"
@@ -145,7 +134,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
 
-</com.facebook.shimmer.ShimmerFrameLayout>
+</androidx.cardview.widget.CardView>
