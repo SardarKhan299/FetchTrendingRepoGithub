@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.traiden.fetchtrendingrepo.R
 import com.traiden.fetchtrendingrepo.domain.Repository
 
