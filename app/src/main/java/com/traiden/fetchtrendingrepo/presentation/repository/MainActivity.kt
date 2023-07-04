@@ -16,6 +16,8 @@ import com.traiden.fetchtrendingrepo.domain.Items
 import com.traiden.fetchtrendingrepo.domain.NetworkResult
 import com.traiden.fetchtrendingrepo.presentation.viewmodel.TrendingRepositoriesViewModel
 import com.traiden.fetchtrendingrepo.util.SharedPreferences
+import com.traiden.fetchtrendingrepo.util.gone
+import com.traiden.fetchtrendingrepo.util.visible
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -63,17 +65,17 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private fun showRetryLayout() {
         Log.d(MainActivity::class.simpleName, "showRetryLayout: ")
-        binding.retryLayout.visibility = View.VISIBLE
+        binding.retryLayout.visible()
     }
 
     private fun hideRetryLayout() {
         Log.d(MainActivity::class.simpleName, "showRetryLayout: ")
-        binding.retryLayout.visibility = View.GONE
+        binding.retryLayout.gone()
     }
 
     private fun setDataOnRecyclerView(networkResult: NetworkResult<Items>) {
         // Show the fetched data in the RecyclerView
-        binding.rvRepositories.visibility = View.VISIBLE
+        binding.rvRepositories.visible()
         // Update the UI with the fetched repositories
         val respositories = networkResult.data as Items
         adapter = RepoAdapter(this, respositories.items)
@@ -84,13 +86,13 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         Log.d(MainActivity::class.simpleName, "startShimmerAnimation: ")
         // Start shimmer animation
         binding.shimmerLayout.startShimmer()
-        binding.rvRepositories.visibility = View.GONE
+        binding.rvRepositories.gone()
     }
 
     private fun stopShimmerAnimation() {
         Log.d(MainActivity::class.simpleName, "stopShimmerAnimation: ")
         binding.shimmerLayout.stopShimmer()
-        binding.shimmerLayout.visibility = View.GONE
+        binding.shimmerLayout.gone()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
