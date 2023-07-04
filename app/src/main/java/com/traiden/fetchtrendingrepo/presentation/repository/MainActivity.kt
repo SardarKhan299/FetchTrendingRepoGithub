@@ -20,27 +20,17 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : BaseActivity(R.layout.activity_main) {
     private val viewModel: TrendingRepositoriesViewModel by viewModels()
-
     private lateinit var adapter: RepoAdapter
-    private lateinit var recylerview: RecyclerView
-    private lateinit var shimmerFrameLayout: ShimmerFrameLayout
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val binding: ActivityMainBinding = getBinding() as ActivityMainBinding
-        recylerview = binding.rvRepositories
-        shimmerFrameLayout = binding.shimmerLayout
-
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recylerview.layoutManager = llm
-        observeViewModel()
-        viewModel.fetchTrendingRepositories()
-    }
+    private lateinit var binding: ActivityMainBinding
 
     override fun setupViews() {
         Log.d(MainActivity::class.simpleName, "setupViews: ")
+        binding = (getBinding() as ActivityMainBinding)
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        binding.rvRepositories.layoutManager = llm
+        observeViewModel()
+        viewModel.fetchTrendingRepositories()
     }
 
     private fun observeViewModel() {
@@ -65,21 +55,23 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
 
     private fun setDataOnRecyclerView(networkResult: NetworkResult<Items>) {
         // Show the fetched data in the RecyclerView
-        recylerview.visibility = View.VISIBLE
+        binding.rvRepositories.visibility = View.VISIBLE
         // Update the UI with the fetched repositories
         val respositories = networkResult.data as Items
         adapter = RepoAdapter(this, respositories.items)
-        recylerview.adapter = adapter
+        binding.rvRepositories.adapter = adapter
     }
 
     private fun startShimmerAnimation() {
+        Log.d(MainActivity::class.simpleName, "startShimmerAnimation: ")
         // Start shimmer animation
-        shimmerFrameLayout.startShimmer()
-        recylerview.visibility = View.GONE
+        binding.shimmerLayout.startShimmer()
+        binding.rvRepositories.visibility = View.GONE
     }
 
     private fun stopShimmerAnimation() {
-        shimmerFrameLayout.stopShimmer()
-        shimmerFrameLayout.visibility = View.GONE
+        Log.d(MainActivity::class.simpleName, "stopShimmerAnimation: ")
+        binding.shimmerLayout.stopShimmer()
+        binding.shimmerLayout.visibility = View.GONE
     }
 }
