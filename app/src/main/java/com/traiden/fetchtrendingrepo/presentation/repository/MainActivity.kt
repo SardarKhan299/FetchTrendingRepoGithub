@@ -4,6 +4,7 @@ package com.traiden.fetchtrendingrepo.presentation.repository
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,9 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
         binding.rvRepositories.layoutManager = llm
         observeViewModel()
         viewModel.fetchTrendingRepositories()
+        binding.retryLayout.findViewById<Button>(R.id.btnRetry).setOnClickListener {
+            viewModel.fetchTrendingRepositories()
+        }
     }
 
     private fun observeViewModel() {
@@ -38,12 +42,15 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             when(networkResult){
                 is NetworkResult.Loading ->{
                     startShimmerAnimation()
+                    hideRetryLayout()
                 }
                 is NetworkResult.Error ->{
                     stopShimmerAnimation()
+                    showRetryLayout()
                 }
                 is NetworkResult.Success ->{
                     // Stop shimmer animation
+                    hideRetryLayout()
                     stopShimmerAnimation()
                     setDataOnRecyclerView(networkResult)
                 }
@@ -51,6 +58,16 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
             }
 
         }
+    }
+
+    private fun showRetryLayout() {
+        Log.d(MainActivity::class.simpleName, "showRetryLayout: ")
+        binding.retryLayout.visibility = View.VISIBLE
+    }
+
+    private fun hideRetryLayout() {
+        Log.d(MainActivity::class.simpleName, "showRetryLayout: ")
+        binding.retryLayout.visibility = View.GONE
     }
 
     private fun setDataOnRecyclerView(networkResult: NetworkResult<Items>) {
