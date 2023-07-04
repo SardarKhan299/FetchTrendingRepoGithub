@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FetchTrendingRepo</string>
     <string name="user_profile">User Porfile Image</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="error_desc">An allien is probably blocking your signal</string>
+    <string name="retry">RETRY</string>
 </resources>

@@ -27,6 +27,20 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="ErrorStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="ErrorStyleDesc" parent="android:Widget.TextView">
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
     <style name="DescStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textSize">10sp</item>
