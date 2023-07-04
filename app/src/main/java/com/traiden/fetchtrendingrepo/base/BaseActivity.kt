@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.traiden.fetchtrendingrepo.R
+import com.traiden.fetchtrendingrepo.util.SharedPreferences
 
 abstract class BaseActivity(@LayoutRes private val layoutResId : Int) : AppCompatActivity() {
 
@@ -39,7 +40,37 @@ abstract class BaseActivity(@LayoutRes private val layoutResId : Int) : AppCompa
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        configurationChanged(newConfig)
         mPrevConfig = Configuration(newConfig)
+    }
+
+    protected open fun configurationChanged(newConfig: Configuration) {
+        when (SharedPreferences.getAppTheme(this)) {
+            AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM -> {
+                if(isNightConfigChanged(newConfig)){
+                    Log.d(BaseActivity::class.simpleName, "configurationChanged: Mode Changed")
+                    if(isOnDarkMode(newConfig)){
+                        Log.d(BaseActivity::class.simpleName, "configurationChanged: Dark Mode")
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }else{
+                        Log.d(BaseActivity::class.simpleName, "configurationChanged: Light Mode")
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                }else{
+                    Log.d(BaseActivity::class.simpleName, "configurationChanged: Mode Not Changed")
+                    if(isOnDarkMode(newConfig)){
+                        Log.d(BaseActivity::class.simpleName, "configurationChanged: Dark Mode")
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    }else{
+                        Log.d(BaseActivity::class.simpleName, "configurationChanged: Light Mode")
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    }
+                }
+            }
+        }
+        Log.d(BaseActivity::class.simpleName, "configurationChanged: Recreate")
+        recreate()
+
     }
 
 
