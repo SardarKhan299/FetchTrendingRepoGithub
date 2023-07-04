@@ -1,6 +1,8 @@
 package com.traiden.fetchtrendingrepo.data.repositories
 
 import com.traiden.fetchtrendingrepo.domain.GithubRepository
+import com.traiden.fetchtrendingrepo.domain.Items
+import com.traiden.fetchtrendingrepo.domain.Owner
 import com.traiden.fetchtrendingrepo.domain.Repository
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
@@ -28,7 +30,8 @@ class GithubRepositoryTest {
     fun fetchTrendingRepositories_should_return_list_of_repositories() {
         runBlocking {
             // Given
-            val repositories = Repository("Repo 1", "Owner 1", "Description 1", "", "java", 4)
+            val repositories = Items(listOf(Repository("Repo 1", Owner("","OwnerName"), "Description 1", "", 4),
+                Repository("Repo 2", Owner("","OwnerName2"), "Description 2", "", 5)))
             Mockito.`when`(apiService.getTrendingRepositories("")).thenReturn(repositories)
 
             // When

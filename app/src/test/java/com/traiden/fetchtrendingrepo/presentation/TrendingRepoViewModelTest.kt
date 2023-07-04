@@ -2,6 +2,9 @@ package com.traiden.fetchtrendingrepo.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import com.traiden.fetchtrendingrepo.domain.Items
+import com.traiden.fetchtrendingrepo.domain.NetworkResult
+import com.traiden.fetchtrendingrepo.domain.Owner
 import com.traiden.fetchtrendingrepo.domain.Repository
 import com.traiden.fetchtrendingrepo.domain.usecases.GetTrendingRepositoriesUseCase
 import com.traiden.fetchtrendingrepo.presentation.viewmodel.TrendingRepositoriesViewModel
@@ -51,17 +54,18 @@ class TrendingRepoViewModelTest {
 
         runBlocking {
             // Given
-            val repositories =
-                Repository("Repo 1", "Owner 1", "Description 1", "", "java", 4)
+            val repositories = Items(listOf(Repository("Repo 1", Owner("","OwnerName"), "Description 1", "", 4),
+                Repository("Repo 2", Owner("","OwnerName2"), "Description 2", "", 5)))
+
             Mockito.`when`(getTrendingRepositoriesUseCase.execute()).thenReturn(repositories)
 
             // When
             trendingRepositoriesViewModel.fetchTrendingRepositories()
 
             // Then
-            val liveDataObserver = mock(Observer::class.java) as Observer<Repository>
+            val liveDataObserver = mock(Observer::class.java) as Observer<NetworkResult<Items>>
             trendingRepositoriesViewModel.repositories.observeForever(liveDataObserver)
-            verify(liveDataObserver).onChanged(repositories)
+            verify(liveDataObserver).onChanged(NetworkResult.Success(repositories))
         }
     }
 }
