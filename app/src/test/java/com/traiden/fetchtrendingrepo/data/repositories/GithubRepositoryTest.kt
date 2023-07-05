@@ -1,9 +1,6 @@
 package com.traiden.fetchtrendingrepo.data.repositories
 
-import com.traiden.fetchtrendingrepo.domain.GithubRepository
-import com.traiden.fetchtrendingrepo.domain.Items
-import com.traiden.fetchtrendingrepo.domain.Owner
-import com.traiden.fetchtrendingrepo.domain.Repository
+import com.traiden.fetchtrendingrepo.domain.*
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -11,6 +8,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.`when`
+import org.mockito.internal.stubbing.answers.ThrowsException
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
@@ -39,6 +38,38 @@ class GithubRepositoryTest {
 
             // Then
             assertThat(result).isEqualTo(repositories)
+        }
+    }
+
+
+    @Test
+    fun `fetchTrendingRepositories_error_case`() {
+        runBlocking {
+
+            // Given
+            Mockito.`when`(apiService.getTrendingRepositories("")).thenReturn(null)
+
+            // When
+            val result = githubRepository.getTrendingRepositories()
+
+            // Then
+            assertThat(result).isEqualTo(null)
+        }
+    }
+
+
+    @Test
+    fun `fetchTrendingRepositories Return Empty List`() {
+        runBlocking {
+
+            // Given
+            Mockito.`when`(apiService.getTrendingRepositories("")).thenReturn(Items(emptyList()))
+
+            // When
+            val result = githubRepository.getTrendingRepositories()
+
+            // Then
+            assertThat(result).isEqualTo(Items(emptyList()))
         }
     }
 

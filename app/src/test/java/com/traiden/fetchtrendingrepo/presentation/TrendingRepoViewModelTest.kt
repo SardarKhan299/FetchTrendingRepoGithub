@@ -1,5 +1,6 @@
 package com.traiden.fetchtrendingrepo.presentation
 
+import android.content.ClipData.Item
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.traiden.fetchtrendingrepo.domain.Items
@@ -14,6 +15,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -22,8 +24,7 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
@@ -66,6 +67,24 @@ class TrendingRepoViewModelTest {
             val liveDataObserver = mock(Observer::class.java) as Observer<NetworkResult<Items>>
             trendingRepositoriesViewModel.repositories.observeForever(liveDataObserver)
             verify(liveDataObserver).onChanged(NetworkResult.Success(repositories))
+        }
+    }
+
+
+    @Test
+    fun `fetchTrendingRepositoriesReturnEmptyList`() {
+
+        runBlocking {
+            // Given
+            Mockito.`when`(getTrendingRepositoriesUseCase.execute()).thenReturn(Items(emptyList()))
+
+            // When
+            trendingRepositoriesViewModel.fetchTrendingRepositories()
+
+            // Then
+            val liveDataObserver = mock(Observer::class.java) as Observer<NetworkResult<Items>>
+            trendingRepositoriesViewModel.repositories.observeForever(liveDataObserver)
+            verify(liveDataObserver).onChanged(NetworkResult.Error())
         }
     }
 }
