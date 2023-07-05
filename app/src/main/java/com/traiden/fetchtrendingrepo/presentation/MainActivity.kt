@@ -30,9 +30,6 @@ class MainActivity : BaseActivity(R.layout.activity_main) {
     override fun setupViews() {
         Log.d(MainActivity::class.simpleName, "setupViews: ")
         binding = (getBinding() as ActivityMainBinding)
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        binding.rvRepositories.layoutManager = llm
         observeViewModel()
         viewModel.fetchTrendingRepositories()
         binding.retryLayout.findViewById<Button>(R.id.btnRetry).setOnClickListener {
