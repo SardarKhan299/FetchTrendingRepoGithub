@@ -16,9 +16,8 @@ object RegistrationUtil {
         password:String,
         confirmPassword:String
     ):Boolean{
-        if(username.isEmpty()) return false
-        if(existingUsers.contains(username)) return false
-        if(password.isEmpty()) return false
+        if(username.isEmpty() || password.isEmpty()) return false
+        if(username in existingUsers) return false
         if(password != confirmPassword) return false
         if(password.count { it.isDigit() }<2) return false
         return true
