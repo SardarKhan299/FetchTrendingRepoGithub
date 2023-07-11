@@ -31,7 +31,8 @@ class GithubRepositoryTest {
             // Given
             val repositories = Items(listOf(Repository("Repo 1", Owner("","OwnerName"), "Description 1", "", 4),
                 Repository("Repo 2", Owner("","OwnerName2"), "Description 2", "", 5)))
-            Mockito.`when`(apiService.getTrendingRepositories("")).thenReturn(repositories)
+
+            `when`(apiService.getTrendingRepositories("")).thenReturn(repositories)
 
             // When
             val result = githubRepository.getTrendingRepositories()
@@ -47,7 +48,7 @@ class GithubRepositoryTest {
         runBlocking {
 
             // Given
-            Mockito.`when`(apiService.getTrendingRepositories("")).thenReturn(null)
+            `when`(apiService.getTrendingRepositories("")).thenReturn(null)
 
             // When
             val result = githubRepository.getTrendingRepositories()
@@ -63,7 +64,7 @@ class GithubRepositoryTest {
         runBlocking {
 
             // Given
-            Mockito.`when`(apiService.getTrendingRepositories("")).thenReturn(Items(emptyList()))
+            `when`(apiService.getTrendingRepositories("")).thenReturn(Items(emptyList()))
 
             // When
             val result = githubRepository.getTrendingRepositories()
