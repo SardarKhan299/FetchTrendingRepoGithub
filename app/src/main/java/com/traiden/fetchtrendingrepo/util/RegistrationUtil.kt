@@ -2,7 +2,7 @@ package com.traiden.fetchtrendingrepo.util
 
 object RegistrationUtil {
 
-    private val existingUsers = listOf<String>("peter","carl")
+    private val existingUsers = listOf<String>("Peter","Carl")
 
 
     // input is not valid
@@ -16,7 +16,11 @@ object RegistrationUtil {
         password:String,
         confirmPassword:String
     ):Boolean{
-
+        if(username.isEmpty()) return false
+        if(existingUsers.contains(username)) return false
+        if(password.isEmpty()) return false
+        if(password != confirmPassword) return false
+        if(password.count { it.isDigit() }<2) return false
         return true
     }
 
