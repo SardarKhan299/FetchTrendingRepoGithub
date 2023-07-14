@@ -4,6 +4,7 @@ import com.traiden.fetchtrendingrepo.domain.GithubRepository
 import com.traiden.fetchtrendingrepo.domain.Items
 import com.traiden.fetchtrendingrepo.domain.Owner
 import com.traiden.fetchtrendingrepo.domain.Repository
+import com.traiden.fetchtrendingrepo.util.MockRepoHelper
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -40,4 +41,22 @@ class FetchTrendingRepoUseCaseTest {
             assertThat(result).isEqualTo(repositories)
         }
     }
+
+
+    @Test
+    fun `call filtered method should return filtered list`() {
+        runBlocking {
+            // Given
+            Mockito.`when`(githubRepository.getTrendingRepositories()).thenReturn(MockRepoHelper.getFilteredList())
+
+            // When
+            val result = getTrendingRepositoriesUseCase.getFilteredList()
+
+            // Then
+            assertThat(result).isEqualTo(MockRepoHelper.getFilteredList())
+        }
+    }
+
+
+
 }

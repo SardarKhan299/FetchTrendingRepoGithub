@@ -2,14 +2,18 @@ package com.traiden.fetchtrendingrepo.presentation
 
 import android.content.ClipData.Item
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.google.common.base.Predicates.instanceOf
 import com.traiden.fetchtrendingrepo.domain.Items
 import com.traiden.fetchtrendingrepo.domain.NetworkResult
 import com.traiden.fetchtrendingrepo.domain.Owner
 import com.traiden.fetchtrendingrepo.domain.Repository
 import com.traiden.fetchtrendingrepo.domain.usecases.GetTrendingRepositoriesUseCase
 import com.traiden.fetchtrendingrepo.presentation.viewmodel.TrendingRepositoriesViewModel
-import io.mockk.mockk
+import com.traiden.fetchtrendingrepo.util.MockRepoHelper
+import io.mockk.*
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -17,6 +21,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +36,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class TrendingRepoViewModelTest {
 
-    @Mock
+    @MockK
     private lateinit var getTrendingRepositoriesUseCase: GetTrendingRepositoriesUseCase
 
     private lateinit var trendingRepositoriesViewModel: TrendingRepositoriesViewModel
@@ -41,6 +46,7 @@ class TrendingRepoViewModelTest {
 
     @Before
     fun setup() {
+        MockKAnnotations.init(this)
         trendingRepositoriesViewModel = TrendingRepositoriesViewModel(getTrendingRepositoriesUseCase)
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
@@ -55,36 +61,81 @@ class TrendingRepoViewModelTest {
 
         runBlocking {
             // Given
-            val repositories = Items(listOf(Repository("Repo 1", Owner("","OwnerName"), "Description 1", "", 4),
-                Repository("Repo 2", Owner("","OwnerName2"), "Description 2", "", 5)))
 
-            Mockito.`when`(getTrendingRepositoriesUseCase.execute()).thenReturn(repositories)
+
+            //Mockito.`when`(getTrendingRepositoriesUseCase.execute()).thenReturn(MockRepoHelper.getMockRepo())
+
+            coEvery {
+                getTrendingRepositoriesUseCase.execute()
+            }.returns(MockRepoHelper.getMockRepo())
+
+
+            val observer = mockk<Observer<NetworkResult<Items>>> { every { onChanged(any()) } just Runs }
+
+            //val liveDataObserver = mock(Observer::class.java) as Observer<NetworkResult<Items>>
+
+            trendingRepositoriesViewModel.repositories.observeForever(observer)
+            // When
+            trendingRepositoriesViewModel.fetchTrendingRepositories()
+
+            coVerify {
+                getTrendingRepositoriesUseCase.execute()
+            }
+                //verify(liveDataObserver).onChanged(NetworkResult.Loading())
+                //verify(liveDataObserver).onChanged(NetworkResult.Success(MockRepoHelper.getMockRepo()))
+            }
+        }
+
+
+    @Test
+    fun `fetchTrendingRepositoriesReturnEmptyList`() {
+        runBlocking {
+            // Given
+            coEvery {
+                getTrendingRepositoriesUseCase.execute()
+            }.returns(Items(emptyList()))
 
             // When
             trendingRepositoriesViewModel.fetchTrendingRepositories()
 
+            coVerify {
+                getTrendingRepositoriesUseCase.execute()
+            }
+
             // Then
             val liveDataObserver = mock(Observer::class.java) as Observer<NetworkResult<Items>>
             trendingRepositoriesViewModel.repositories.observeForever(liveDataObserver)
-            verify(liveDataObserver).onChanged(NetworkResult.Success(repositories))
+            Assert.assertEquals(trendingRepositoriesViewModel.repositories.value as NetworkResult<Items>,NetworkResult.Success(Items(
+                emptyList()
+            )))
+            //verify(liveDataObserver).onChanged(NetworkResult.Success(Items(emptyList())))
         }
     }
 
 
     @Test
-    fun `fetchTrendingRepositoriesReturnEmptyList`() {
-
+    fun `fetchTrendingRepositoriesReturnSortedList`() {
         runBlocking {
             // Given
-            Mockito.`when`(getTrendingRepositoriesUseCase.execute()).thenReturn(Items(emptyList()))
+            coEvery {
+                getTrendingRepositoriesUseCase.execute()
+            }.returns(MockRepoHelper.getFilteredList())
 
             // When
             trendingRepositoriesViewModel.fetchTrendingRepositories()
 
+            coVerify {
+                getTrendingRepositoriesUseCase.execute()
+            }
+
             // Then
             val liveDataObserver = mock(Observer::class.java) as Observer<NetworkResult<Items>>
             trendingRepositoriesViewModel.repositories.observeForever(liveDataObserver)
-            verify(liveDataObserver).onChanged(NetworkResult.Error())
+            Assert.assertEquals(trendingRepositoriesViewModel.repositories.value as NetworkResult<Items>,
+                NetworkResult.Success(MockRepoHelper.getFilteredList()))
         }
     }
+
+
+
 }

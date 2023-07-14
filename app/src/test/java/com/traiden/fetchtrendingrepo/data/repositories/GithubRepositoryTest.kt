@@ -1,6 +1,7 @@
 package com.traiden.fetchtrendingrepo.data.repositories
 
 import com.traiden.fetchtrendingrepo.domain.*
+import com.traiden.fetchtrendingrepo.util.ApplicationConstants
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
@@ -18,6 +19,7 @@ class GithubRepositoryTest {
 
     @Mock
     private lateinit var apiService : ApiService
+
     private lateinit var githubRepository: GithubRepository
 
     @Before
@@ -32,7 +34,7 @@ class GithubRepositoryTest {
             val repositories = Items(listOf(Repository("Repo 1", Owner("","OwnerName"), "Description 1", "", 4),
                 Repository("Repo 2", Owner("","OwnerName2"), "Description 2", "", 5)))
 
-            `when`(apiService.getTrendingRepositories("")).thenReturn(repositories)
+            `when`(apiService.getTrendingRepositories(ApplicationConstants.API_QUERY)).thenReturn(repositories)
 
             // When
             val result = githubRepository.getTrendingRepositories()
@@ -48,7 +50,7 @@ class GithubRepositoryTest {
         runBlocking {
 
             // Given
-            `when`(apiService.getTrendingRepositories("")).thenReturn(null)
+            `when`(apiService.getTrendingRepositories(ApplicationConstants.API_QUERY)).thenReturn(null)
 
             // When
             val result = githubRepository.getTrendingRepositories()
@@ -64,7 +66,7 @@ class GithubRepositoryTest {
         runBlocking {
 
             // Given
-            `when`(apiService.getTrendingRepositories("")).thenReturn(Items(emptyList()))
+            `when`(apiService.getTrendingRepositories(ApplicationConstants.API_QUERY)).thenReturn(Items(emptyList()))
 
             // When
             val result = githubRepository.getTrendingRepositories()

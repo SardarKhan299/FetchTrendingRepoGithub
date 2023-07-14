@@ -5,4 +5,5 @@ import com.traiden.fetchtrendingrepo.domain.Repository
 
 interface GetTrendingRepositoriesUseCase {
     suspend fun execute(): Items
+    suspend fun getFilteredList(): Items
 }

@@ -1,8 +1,8 @@
 package com.traiden.fetchtrendingrepo.domain
 
-sealed class NetworkResult<T>(val data: T? = null) {
+sealed class NetworkResult<T>(open val data: T? = null) {
 
-    class Success<T>(data: T) : NetworkResult<T>(data)
+    data class Success<T>(override val data: T) : NetworkResult<T>(data)
 
     class Error<T>(data: T? = null) : NetworkResult<T>(data)
 

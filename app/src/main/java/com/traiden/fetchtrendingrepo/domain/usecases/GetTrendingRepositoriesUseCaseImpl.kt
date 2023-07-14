@@ -8,4 +8,8 @@ class GetTrendingRepositoriesUseCaseImpl(private val githubRepository: GithubRep
     override suspend fun execute(): Items {
         return githubRepository.getTrendingRepositories()
     }
+
+    override suspend fun getFilteredList(): Items {
+        return githubRepository.getTrendingRepositories()
+    }
 }
